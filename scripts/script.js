@@ -29,7 +29,7 @@ document.getElementById('month-select').addEventListener('change', handleSelectC
 
 
 
-import { generateYearOptions, generateMonthOptions, generateCalendar, fetchDataFromSpreadsheet } from './utils.js';
+import { generateYearOptions, generateMonthOptions, generateCalendar, fetchDataFromSpreadsheet } from 'scripts/utils.js';
 
 
 // 初期表示のカレンダーを作成
