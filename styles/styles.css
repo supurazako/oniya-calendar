@@ -1,0 +1,67 @@
+.box {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 20px 40px 40px;
+    border-radius: 40px;
+}
+
+.box-text {
+    font-size: 16px;
+    color: #333;
+}
+
+.year-select, .month-select {
+    width: 5%;
+    height: 40px;
+    font-size: 150%;
+}
+
+.calendar-table {
+    text-align: center;
+    margin: 10px auto;
+    border-radius: 15px;
+    background-color: white;
+    border-collapse: collapse;
+
+    padding: 5px;
+    border: solid 1px;
+    width: 80%;
+    height: 600px;
+}
+
+
+.schedule-box {
+    display: flex;
+}
+
+
+.schedule-child {
+    border: 1px solid #000;
+    margin: 10px auto;
+    width: 15%;
+    background-color: rgba(216, 208, 208, 0.418);
+}
+
+
+th, td {
+    font-size: 200%;
+    border: 1px solid #333;
+}
+
+.sunday {
+    color: red;
+}
+
+.saturday {
+    color: blue;
+}
+
+body {
+    text-align: center;
+    width: auto;
+}
+
+html {
+    background-color: rgba(255, 250, 240, 0.527);
+}
