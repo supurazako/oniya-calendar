@@ -83,20 +83,31 @@ async function generateCalendar(year, month) {
 async function fetchDataFromSpreadsheet(year, month) {
     const url = `https://script.google.com/macros/s/AKfycbzYNS1k8RuD8iNJw9J-m9Clin6k1Za3WDDjSsGla_Pn9iHJlexb2RpDWGAhmZZMvmkG/exec?year=${year}&month=${month}`;
 
-    fetch(url)
-    .then(response => {
+    const headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
+    };
+
+    const options = {
+        method: 'GET',
+        headers: headers 
+    };
+
+    try {
+        const response = await fetch(url, options)
+        
         if (!response.ok) {
             throw new Error('Fetch request failed');
         }
-        return response.json();
-    })
-    .then(data => {
-        // サーバーサイドからのデータを処理する
-        console.log(data);
-    })
-    .catch(error => {
+
+        const jsonData = await response.json();
+        console.log(`spreadsheet data: ${jsonData}`);
+        return jsonData;
+
+    } catch (error) {
         console.error('Error fetching data: ', error);
-    });
+    }
+   
 }
 
 
