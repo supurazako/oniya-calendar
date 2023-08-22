@@ -42,8 +42,46 @@ generateMonthOptions();
 
 selectedYear = currentDate.getFullYear();
 selectedMonth = currentDate.getMonth();
-// selectedMonth = currentDate.getMonth();
+
+// カレンダーを初期表示
 generateCalendar(selectedYear, selectedMonth);
+
+
+const prevMonthButton = document.getElementById('prev-month');
+const nextMonthButton = document.getElementById('next-month');
+const currentMonthLabel = document.getElementById('current-month');
+
+let currentYear = currentDate.getFullYear();
+let currentMonth = currentDate.getMonth();
+
+// 前の月に移動するボタンのクリックイベント
+prevMonthButton.addEventListener('click', () => {
+    currentMonth -= 1;
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear -= 1;
+    }
+    generateCalendar(currentYear, currentMonth);
+    updateCurrentMonthLabel();
+});
+
+// 次の月に移動するボタンのクリックイベント
+nextMonthButton.addEventListener('click', () => {
+    currentMonth += 1;
+    if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear += 1;
+    }
+    generateCalendar(currentYear, currentMonth);
+    updateCurrentMonthLabel();
+});
+
+// カレンダーの表示を更新
+function updateCurrentMonthLabel() {
+    currentMonthLabel.textContent = `${currentYear} ${currentMonth + 1}月 `;
+}
+
+
 
 // ページが読み込まれた後に予定を表示
 window.addEventListener('DOMContentLoaded', async () => {
