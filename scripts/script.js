@@ -11,7 +11,7 @@ const currentDate = new Date();
 
 
 // セレクトボックスの選択状態が変更されたときの処理
-function handleSelectChange() {
+async function handleSelectChange() {
     selectedYear = parseInt(document.getElementById('year-select').value);
     selectedMonth = parseInt(document.getElementById('month-select').value);
 
@@ -19,7 +19,8 @@ function handleSelectChange() {
     generateCalendar(selectedYear, selectedMonth);
 
     // スプレッドシートからデータを取得
-    fetchDataFromSpreadsheet(selectedYear, selectedMonth);
+    const scheduleData = fetchDataFromSpreadsheet(selectedYear, selectedMonth);
+    await displaySchedules(selectedYear, selectedMonth);
 }
 
 
@@ -29,7 +30,8 @@ document.getElementById('month-select').addEventListener('change', handleSelectC
 
 
 
-import { generateYearOptions, generateMonthOptions, generateCalendar, fetchDataFromSpreadsheet } from './utils.js';
+
+import { generateYearOptions, generateMonthOptions, generateCalendar, fetchDataFromSpreadsheet, displaySchedules } from './utils.js';
 
 
 // 初期表示のカレンダーを作成
@@ -42,4 +44,8 @@ selectedYear = currentDate.getFullYear();
 selectedMonth = currentDate.getMonth();
 // selectedMonth = currentDate.getMonth();
 generateCalendar(selectedYear, selectedMonth);
-fetchDataFromSpreadsheet(selectedYear, selectedMonth);
+
+// ページが読み込まれた後に予定を表示
+window.addEventListener('DOMContentLoaded', async () => {
+    await displaySchedules(selectedYear, selectedMonth);
+})

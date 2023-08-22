@@ -46,20 +46,30 @@ async function generateCalendar(year, month) {
     
     let firstDayOfMonth = firstDateOfMonth.getDay(); // 曜日を取得
 
+    // 前月の最終日を求める
+    let lastDateOfLastMonth = new Date(year, month, 0);
+    let lastDayOfLastMonth = lastDateOfLastMonth.getDate();
+    console.log(`lastDateOfLastMonth: ${lastDateOfLastMonth}, lastDayOflastMonth: ${lastDayOfLastMonth}`);
+
 
     // カレンダーグリッドを生成するためのHTML文字列を生成
     let calendarHTML = '<table>';
-    calendarHTML += '<tr><th class="sunday">日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th class="saturday">土</th></tr>';
+    calendarHTML += '<tr><th>日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th></tr>';
+
+    // 前月の日数分の空白セルを埋める
+    calendarHTML += '<tr>';
+    for (let i = 0; i < firstDayOfMonth; i++) {
+        let dayToShow = lastDayOfLastMonth - firstDayOfMonth + 1 +1;
+        calendarHTML += `<td class="lastMonth">${dayToShow}</td>`
+    }
 
     // 1日の曜日まで空白のセルを追加
-    calendarHTML += `<tr>${'<td></td>'.repeat(firstDayOfMonth)}`;
-
-
+    // calendarHTML += `<tr>${'<td></td>'.repeat(firstDayOfMonth)}`;
 
     // カレンダーグリッドの日付セルを生成
     while (firstDateOfMonth.getMonth() === month) {
         if (firstDateOfMonth.getDay() === 0) {
-            calendarHTML + '<tr>';
+            calendarHTML += '<tr>';
         }
 
         calendarHTML += `<td>${firstDateOfMonth.getDate()}</td>`;
@@ -68,6 +78,14 @@ async function generateCalendar(year, month) {
             calendarHTML += '</tr>';
         }
 
+        firstDateOfMonth.setDate(firstDateOfMonth.getDate() + 1);
+    }
+
+    // 最終週を次月の日付で埋める
+    while (firstDateOfMonth.getDay() > 0) {
+        let dayToShow = firstDateOfMonth.getDate();
+        let formattedDay = dayToShow === 1 ? (month + 2) + '/1' : dayToShow;
+        calendarHTML += `<td>${formattedDay}</td>`;
         firstDateOfMonth.setDate(firstDateOfMonth.getDate() + 1);
     }
 
@@ -107,9 +125,33 @@ async function fetchDataFromSpreadsheet(year, month) {
     } catch (error) {
         console.error('Error fetching data: ', error);
     }
-   
+}
+
+
+// 予定を生成して表示
+async function displaySchedules (year, month) {
+    const scheduleBoxContainer = document.querySelector('.schedule-boxes');
+
+    const jsonData = await fetchDataFromSpreadsheet(year, month);
+
+    console.log(jsonData);
+
+    // オブジェクト内の配列を取得
+
+    jsonData.forEach(schedule => {
+        const scheduleBox = document.createElement('div');
+        scheduleBox.classList.add('scheduleBoxes');
+        scheduleBox.innerHTML = `
+        <div class="schedule-date">${schedule.date}</div>
+        <div class="schedule-time">${schedule.time}</div>
+        <div class="schedule-site">${schedule.site}</div>
+        <div class="schedule-title"><a href="${schedule.url}">${schedule.title}</a></div>
+        `;
+
+        scheduleBoxContainer.appendChild(scheduleBox);
+    });
 }
 
 
 
-export { generateYearOptions, generateMonthOptions, generateCalendar, fetchDataFromSpreadsheet };
+export { generateYearOptions, generateMonthOptions, generateCalendar, fetchDataFromSpreadsheet, displaySchedules };

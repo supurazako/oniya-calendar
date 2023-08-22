@@ -20,42 +20,41 @@
 .calendar-table {
     text-align: center;
     margin: 10px auto;
-    border-radius: 15px;
+    /* border-radius: 15px; */
     background-color: white;
     border-collapse: collapse;
 
     padding: 5px;
     border: solid 1px;
-    width: 80%;
-    height: 600px;
+    width: 90%;
+    height: 700px;
 }
 
 
-.schedule-box {
+.schedule-box-container {
     display: flex;
 }
 
 
 .schedule-child {
-    border: 1px solid #000;
+    border: 1px solid rgb(0, 0, 0);
     margin: 10px auto;
-    width: 15%;
     background-color: rgba(216, 208, 208, 0.418);
 }
 
 
 th, td {
-    font-size: 200%;
-    border: 1px solid #333;
+    width: 14%;
+    height: auto;
+    font-size: 100%;
+    vertical-align: top;
+    border: 1px solid #7070707e;
 }
 
-.sunday {
-    color: red;
+th {
+    height: 4%;
 }
 
-.saturday {
-    color: blue;
-}
 
 body {
     text-align: center;
@@ -63,5 +62,5 @@ body {
 }
 
 html {
-    background-color: rgba(255, 250, 240, 0.527);
+    background-color: rgb(255, 255, 255);
 }
