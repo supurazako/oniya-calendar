@@ -1,41 +1,3 @@
-// 年の選択肢を生成
-function generateYearOptions(minYear, maxYear) {
-    const yearSelect = document.getElementById('year-select');
-
-    // 選択肢の範囲を最小年と最大年に設定
-    for (let year = minYear; year <= maxYear; year++) {
-        const option = document.createElement('option');
-        option.value = year;
-        option.text = year;
-        yearSelect.appendChild(option);
-    }
-
-    // 最初に現在の年を選択状態にする
-    const currentYear = new Date().getFullYear();
-    yearSelect.value = currentYear;
-}
-
-
-// 月の選択肢を生成
-function generateMonthOptions() {
-    const monthSelect = document.getElementById('month-select');
-
-
-    // 選択肢の範囲を1月から12月に設定
-    // 0から数えるので0は1月を表す
-    for (let month = 0; month < 12; month++) {
-        const option = document.createElement('option');
-        option.value = month;
-        option.text = month + 1;
-        monthSelect.appendChild(option);
-    }
-
-    // 最初に現在の月を選択状態にする
-    const currentMonth = new Date().getMonth();
-    monthSelect.value = currentMonth;
-}
-
-
 // カレンダーの生成と表示
 async function generateCalendar(year, month) {
     const calendarTable = document.getElementById('calendar-table');
@@ -154,4 +116,4 @@ async function displaySchedules (year, month) {
 
 
 
-export { generateYearOptions, generateMonthOptions, generateCalendar, fetchDataFromSpreadsheet, displaySchedules };
+export { generateCalendar, fetchDataFromSpreadsheet, displaySchedules };

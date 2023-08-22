@@ -9,18 +9,19 @@
         <title>おにやカレンダー</title>
     </head>
     <body>
-        <h1>おにやカレンダー</h1>
-        <div class="calendar-container" id="calendar-container">
-            <select class="year-select" id="year-select"></select>
-            <select class="month-select" id="month-select"></select>
-            
-            <div class="schedule-box-container">
-                <table class="calendar-table" id="calendar-table"></table>
-                <!-- <div class="schedule-boxes">
-                    <p class="schedule-child">予定ボックス</p>
-                </div> -->
-            </div>
-
+        <div class="calendar-header" id="calendar-header">
+            <h1 id="title">おにやカレンダー</h1>
+            <button id="prev-month"><</button>
+            <button id="next-month">></button>
+            <h2 id="current-month"></h2>
+            <!-- <select class="year-select" id="year-select"></select>
+            <select class="month-select" id="month-select"></select> -->
+        </div>
+        <div class="calendar-table-container">
+            <table class="calendar-table" id="calendar-table"></table>
+            <!-- <div class="schedule-boxes">
+                <p class="schedule-child">予定ボックス</p>
+            </div> -->
         </div>
 
         <script type="module" src="scripts/script.js"></script>
