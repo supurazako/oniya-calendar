@@ -72,13 +72,6 @@ function updateCurrentMonthLabel() {
 currentMonthLabel.textContent = `${currentYear} ${currentMonth + 1}月`;
 
 
-// カレンダーの表示を更新
-function updateCurrentMonthLabel() {
-    currentMonthLabel.textContent = `${currentYear} ${currentMonth + 1}月 `;
-}
-
-
-
 // ページが読み込まれた後に予定を表示
 window.addEventListener('DOMContentLoaded', async () => {
     await displaySchedules(currentMonth, currentMonth);
