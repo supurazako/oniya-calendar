@@ -25,8 +25,6 @@ async function generateCalendar(year, month) {
         calendarHTML += `<td class="lastMonth">${dayToShow}</td>`
     }
 
-    // 1日の曜日まで空白のセルを追加
-    // calendarHTML += `<tr>${'<td></td>'.repeat(firstDayOfMonth)}`;
 
     // カレンダーグリッドの日付セルを生成
     while (firstDateOfMonth.getMonth() === month) {
@@ -34,7 +32,8 @@ async function generateCalendar(year, month) {
             calendarHTML += '<tr>';
         }
 
-        calendarHTML += `<td>${firstDateOfMonth.getDate()}</td>`;
+        const formattedDate = `${year}-${month + 1}-${firstDateOfMonth.getDate()}`;
+        calendarHTML += `<td data-date="${formattedDate}">${firstDateOfMonth.getDate()}</td>`;
 
         if (firstDateOfMonth.getDay() === 6) {
             calendarHTML += '</tr>';
@@ -92,25 +91,32 @@ async function fetchDataFromSpreadsheet(year, month) {
 
 // 予定を生成して表示
 async function displaySchedules (year, month) {
-    const scheduleBoxContainer = document.querySelector('.schedule-boxes');
-
+    month += 1; // JSの月は0から始まるため
     const jsonData = await fetchDataFromSpreadsheet(year, month);
 
     console.log(jsonData);
 
     // オブジェクト内の配列を取得
-
     jsonData.forEach(schedule => {
-        const scheduleBox = document.createElement('div');
-        scheduleBox.classList.add('scheduleBoxes');
-        scheduleBox.innerHTML = `
-        <div class="schedule-date">${schedule.date}</div>
-        <div class="schedule-time">${schedule.time}</div>
-        <div class="schedule-site">${schedule.site}</div>
-        <div class="schedule-title"><a href="${schedule.url}">${schedule.title}</a></div>
-        `;
+        const formattedDate = schedule.date.replace(/\//g, "-");
+        console.log(formattedDate);
 
-        scheduleBoxContainer.appendChild(scheduleBox);
+        // data-date属性が一致する日付セルを特定
+        const dateCell = document.querySelectorAll(`[data-date="${formattedDate}"]`);
+
+        if (dateCell) {
+            console.log(`データセルを発見`);
+            // 予定情報を含むHTMLを作成してセルに追加
+            const scheduleInfo = `
+                <div class="schedule-box">
+                    <div class="schedule-date">${schedule.date}</div>
+                    <div class="schedule-time">${schedule.time}</div>
+                    <div class="schedule-site">${schedule.site}</div>
+                    <div class="schedule-title"><a href="${schedule.url}">${schedule.title}</a></div>
+                </div>
+                `;
+                dateCell.innerHTML += scheduleInfo;
+        }
     });
 }
 
