@@ -123,7 +123,7 @@ async function displaySchedules(year, month) {
     });
 }
 
-
+// console.log(schedule.box);
 
 
 export { generateCalendar, fetchDataFromSpreadsheet, displaySchedules };
