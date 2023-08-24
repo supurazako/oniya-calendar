@@ -98,18 +98,21 @@ async function displaySchedules (year, month) {
 
     console.log(jsonData);
 
-    // オブジェクト内の配列を取得
     jsonData.forEach(schedule => {
-        const scheduleBox = document.createElement('div');
-        scheduleBox.classList.add('scheduleBoxes');
-        scheduleBox.innerHTML = `
-        <div class="schedule-date">${schedule.date}</div>
-        <div class="schedule-time">${schedule.time}</div>
-        <div class="schedule-site">${schedule.site}</div>
-        <div class="schedule-title"><a href="${schedule.url}">${schedule.title}</a></div>
-        `;
-
-        scheduleBoxContainer.appendChild(scheduleBox);
+        const formattedDate = schedule.date.replace(/\//g, "-");
+        
+        const dateCell = document.querySelector(`[data-date="${formattedDate}"]`);
+        if (dateCell) {
+            // 予定情報を含むHTMLを作成してセルに追加
+            const scheduleInfo = `
+                <div class="schedule-box">
+                    <div class="schedule-time">${schedule.time}</div>
+                    <div class="schedule-site">${schedule.site}</div>
+                    <div class="schedule-title"><a href="${schedule.url}">${schedule.title}</a></div>
+                </div>
+            `;
+            dateCell.innerHTML += scheduleInfo;
+        }
     });
 }
 
