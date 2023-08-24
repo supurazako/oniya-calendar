@@ -92,26 +92,37 @@ async function fetchDataFromSpreadsheet(year, month) {
 
 
 // 予定を生成して表示
-async function displaySchedules (year, month) {
+async function displaySchedules(year, month) {
     month += 1; // JSの月は0から始まるため
     const jsonData = await fetchDataFromSpreadsheet(year, month);
 
     console.log(jsonData);
 
-    // オブジェクト内の配列を取得
-    jsonData.forEach(schedule => {
-        const scheduleBox = document.createElement('div');
-        scheduleBox.classList.add('scheduleBoxes');
-        scheduleBox.innerHTML = `
-        <div class="schedule-date">${schedule.date}</div>
-        <div class="schedule-time">${schedule.time}</div>
-        <div class="schedule-site">${schedule.site}</div>
-        <div class="schedule-title"><a href="${schedule.url}">${schedule.title}</a></div>
+    // 予定情報を含むHTMLを生成
+    const scheduleBoxes = jsonData.map(schedule => {
+        const formattedDate = schedule.date.replace(/\//g, "-");
+
+        // 予定情報を含むHTMLを作成
+        const scheduleInfo = `
+            <div class="schedule-box">
+                <div class="schedule-time">${schedule.time}</div>
+                <div class="schedule-site">${schedule.site}</div>
+                <div class="schedule-title"><a href="${schedule.url}">${schedule.title}</a></div>
+            </div>
         `;
 
-        scheduleBoxContainer.appendChild(scheduleBox);
+        return { formattedDate, scheduleInfo };
+    });
+
+    // 日付セルに予定情報を追加
+    scheduleBoxes.forEach(scheduleBox => {
+        const dateCell = document.querySelector(`[data-date="${scheduleBox.formattedDate}"]`);
+        if (dateCell) {
+            dateCell.innerHTML += scheduleBox.scheduleInfo;
+        }
     });
 }
+
 
 
 
