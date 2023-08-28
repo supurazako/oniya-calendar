@@ -96,10 +96,10 @@ async function displaySchedules(year, month) {
     month += 1; // JSの月は0から始まるため
     const jsonData = await fetchDataFromSpreadsheet(year, month);
 
-    console.log(jsonData);
+    console.log(jsonData.lastEdited);
 
     // 予定情報を含むHTMLを生成
-    const scheduleBoxes = jsonData.map(schedule => {
+    const scheduleBoxes = jsonData.schedule.map(schedule => {
         const formattedDate = schedule.date.replace(/\//g, "-");
 
         // 予定情報を含むHTMLを作成
@@ -123,7 +123,6 @@ async function displaySchedules(year, month) {
     });
 }
 
-// console.log(schedule.box);
 
 
 export { generateCalendar, fetchDataFromSpreadsheet, displaySchedules };
