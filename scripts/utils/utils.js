@@ -61,8 +61,8 @@ async function generateCalendar(year, month) {
 
 
 // スプレッドシートからデータを取得
-async function fetchDataFromSpreadsheet(year, month) {
-    const url = `https://script.google.com/macros/s/AKfycbzYNS1k8RuD8iNJw9J-m9Clin6k1Za3WDDjSsGla_Pn9iHJlexb2RpDWGAhmZZMvmkG/exec?year=${year}&month=${month}`;
+async function fetchDataFromSpreadsheet(year, month, lastEdited) {
+    const url = `https://script.google.com/macros/s/AKfycbzYNS1k8RuD8iNJw9J-m9Clin6k1Za3WDDjSsGla_Pn9iHJlexb2RpDWGAhmZZMvmkG/exec?year=${year}&month=${month}&lastEdited=${lastEdited}`;
 
     const headers = {
         'Accept': 'application/json',

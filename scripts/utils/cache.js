@@ -1,5 +1,5 @@
 // キャッシュを基にしてカレンダーにスケジュールを表示する
-function displaySchedulesFromCache() {
+function displaySchedulesFromCache(year, month) {
     // キャッシュからスケジュールを取得
     const cacheData = JSON.parse(localStorage.getItem('data'));
     const schedules = cacheData.schedule;
@@ -34,10 +34,12 @@ function displaySchedulesFromCache() {
 // fetchDataFromSpreadsheet() のデータをlocalStorageに保存する
 // 保存するデータは data.schedule, data.lastEditedがある
 // data.scheduleはtime, site, url, title を含む
-function saveDataToCache(data) {
-    const data = {
-        schedule: data.schedule,
-        lastEdited: data.lastEdited,
-    };
-    localStorage.setItem('data', JSON.stringify(data));
+function saveData(year, month, data) {
+    // 月のデータのキーを作成
+    const key = `${year}-${month}`;
+
+    localStorage.setItem(key, JSON.stringify(data));
 }
+
+
+export { displaySchedulesFromCache, saveData };
