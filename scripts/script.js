@@ -1,7 +1,7 @@
 const currentDate = new Date();
 
 
-import { generateCalendar, displaySchedules } from './utils.js';
+import { generateCalendar, displaySchedules } from './utils/utils.js';
 
 
 const prevMonthButton = document.getElementById('prev-month');
