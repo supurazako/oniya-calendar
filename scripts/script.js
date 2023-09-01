@@ -1,7 +1,8 @@
 const currentDate = new Date();
 
 
-import { generateCalendar, displaySchedules } from './utils/utils.js';
+import { generateCalendar, fetchDataFromSpreadsheet, displaySchedules } from './utils/utils.js';
+import { displaySchedulesFromCache, saveData, getLastEdited } from './utils/cache.js';
 
 
 const prevMonthButton = document.getElementById('prev-month');
@@ -23,7 +24,7 @@ prevMonthButton.addEventListener('click', () => {
         currentYear -= 1;
     }
     generateCalendar(currentYear, currentMonth);
-    displaySchedules(currentYear, currentMonth);
+    displaySchedulesFlow(currentYear, currentMonth);
     updateCurrentMonthLabel();
 });
 
@@ -35,7 +36,7 @@ nextMonthButton.addEventListener('click', () => {
         currentYear += 1;
     }
     generateCalendar(currentYear, currentMonth);
-    displaySchedules(currentYear, currentMonth);
+    displaySchedulesFlow(currentYear, currentMonth);
     updateCurrentMonthLabel();
 });
 
@@ -48,7 +49,32 @@ function updateCurrentMonthLabel() {
 currentMonthLabel.textContent = `${currentYear} ${currentMonth + 1}月`;
 
 
+// まず、キャッシュを使用したカレンダーの表示を行い、そのあとにfetchDataFromSpreadsheet()を実行して、データに変更があった場合はカレンダーの表示を更新する
+async function displaySchedulesFlow(year, month) {
+    month += 1; // 月は0から始まるので、1を足して1月を0から始まる1月にする
+    // キャッシュを基にしてカレンダーにスケジュールを表示する
+    displaySchedulesFromCache(year, month);
+    
+    // lastEditedを取得
+    const lastEdited = getLastEdited(year, month);
+    // console.log(`lastEdited: ${lastEdited}`);
+
+    // スプレッドシートからデータを取得
+    const data = await fetchDataFromSpreadsheet(year, month, lastEdited);
+    // console.log(`isLatestData: ${data.isLatestData}`);
+    if (data.isLatestData == false) {
+    // カレンダーの表示を更新
+    await displaySchedules(data.schedule);
+
+    // データをlocalStorageに保存
+    saveData(year, month, data);
+
+    } else {
+        // console.log('データは最新です');
+    }
+}
+
 // ページが読み込まれた後に予定を表示
 window.addEventListener('DOMContentLoaded', async () => {
-    await displaySchedules(currentYear, currentMonth);
+    await displaySchedulesFlow(currentYear, currentMonth);
 })

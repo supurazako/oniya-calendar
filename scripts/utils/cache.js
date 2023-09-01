@@ -1,12 +1,17 @@
 // キャッシュを基にしてカレンダーにスケジュールを表示する
 function displaySchedulesFromCache(year, month) {
     // キャッシュからスケジュールを取得
-    const cacheData = JSON.parse(localStorage.getItem('data'));
+    const cacheData = JSON.parse(localStorage.getItem(`${year}-${month}`));
+    if (cacheData == null) {
+        console.log('キャッシュにデータがありません');
+        return;
+    }
     const schedules = cacheData.schedule;
     if (schedules) {
         // 予定情報を含むHTMLを生成
-        const scheduleBoxes = jsonData.schedule.map(schedules => {
-            const formattedDate = schedules.date.replace(/\//g, "-");
+        // console.log(`cacheData ${cacheData.isLatestData}`);
+        const scheduleBoxes = cacheData.schedule.map(schedule => {
+            const formattedDate = schedule.date.replace(/\//g, "-");
 
             // 予定情報を含むHTMLを作成
             const scheduleInfo = `
@@ -39,7 +44,20 @@ function saveData(year, month, data) {
     const key = `${year}-${month}`;
 
     localStorage.setItem(key, JSON.stringify(data));
+    // console.log(`データを保存しました: ${key}`);
 }
 
 
-export { displaySchedulesFromCache, saveData };
+function getLastEdited(year, month) {
+    const key = `${year}-${month}`;
+    const data = localStorage.getItem(key);
+    const jsonData = JSON.parse(data);
+    if (jsonData == null) {
+        // キャッシュにデータがない場合は、最終更新日を2000-01-01とする
+        return '2000-01-01';
+    }
+    return jsonData.lastEdited;
+}
+
+
+export { displaySchedulesFromCache, saveData, getLastEdited };

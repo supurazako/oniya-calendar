@@ -11,7 +11,6 @@ async function generateCalendar(year, month) {
     // 前月の最終日を求める
     let lastDateOfLastMonth = new Date(year, month, 0);
     let lastDayOfLastMonth = lastDateOfLastMonth.getDate();
-    console.log(`lastDateOfLastMonth: ${lastDateOfLastMonth}, lastDayOflastMonth: ${lastDayOfLastMonth}`);
 
 
     // カレンダーグリッドを生成するためのHTML文字列を生成
@@ -62,6 +61,7 @@ async function generateCalendar(year, month) {
 
 // スプレッドシートからデータを取得
 async function fetchDataFromSpreadsheet(year, month, lastEdited) {
+    // console.log(`request date: ${year}-${month}, lastEdited: ${lastEdited}`);
     const url = `https://script.google.com/macros/s/AKfycbzYNS1k8RuD8iNJw9J-m9Clin6k1Za3WDDjSsGla_Pn9iHJlexb2RpDWGAhmZZMvmkG/exec?year=${year}&month=${month}&lastEdited=${lastEdited}`;
 
     const headers = {
@@ -82,7 +82,7 @@ async function fetchDataFromSpreadsheet(year, month, lastEdited) {
         }
 
         const jsonData = await response.json();
-        console.log(`spreadsheet data: ${jsonData}`);
+        // console.log(`spreadsheet data: ${jsonData}`);
         return jsonData;
 
     } catch (error) {
@@ -92,14 +92,11 @@ async function fetchDataFromSpreadsheet(year, month, lastEdited) {
 
 
 // 予定を生成して表示
-async function displaySchedules(year, month) {
-    month += 1; // JSの月は0から始まるため
-    const jsonData = await fetchDataFromSpreadsheet(year, month);
-
-    console.log(jsonData.lastEdited);
+function displaySchedules(jsonData) {
+    console.log(jsonData);
 
     // 予定情報を含むHTMLを生成
-    const scheduleBoxes = jsonData.schedule.map(schedule => {
+    const scheduleBoxes = jsonData.map(schedule => {
         const formattedDate = schedule.date.replace(/\//g, "-");
 
         // 予定情報を含むHTMLを作成
