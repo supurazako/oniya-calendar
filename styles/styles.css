@@ -15,6 +15,7 @@
     border: solid 1px;
     width: 95%;
     height: 800px;
+    table-layout: fixed;
 }
 
 
@@ -51,16 +52,46 @@
 }
 
 
+.event-box {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.youtube {
+    background-color: red;
+}
+
+.twitch {
+    background-color: purple;
+}
+
+.openrec {
+    background-color: orange;
+}
+
+.otherSite {
+    background-color: green;
+}
+
+.schedule-box {
+    /* セル内のコンテンツの高さを100%に制限 */
+    height: 100%;
+    /* コンテンツが縦に長くなった場合には、スクロールバーを表示 */
+    overflow: auto;    
+}
+
 th, td {
     width: 14%;
     height: auto;
     font-size: 100%;
+    overflow: hidden;
+    white-space: nowrap;
     vertical-align: top;
     border: 1px solid #7070707e;
 }
 
 th {
-    height: 4%;
+    height: 10px;
 }
 
 

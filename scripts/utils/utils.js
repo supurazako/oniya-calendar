@@ -94,6 +94,7 @@ async function fetchDataFromSpreadsheet(year, month, lastEdited) {
 // 予定を生成して表示
 function displaySchedules(jsonData) {
     console.log(jsonData);
+    console.log('予定を更新します')
 
     // 予定情報を含むHTMLを生成
     const scheduleBoxes = jsonData.map(schedule => {

@@ -9,7 +9,7 @@ function displaySchedulesFromCache(year, month) {
     const schedules = cacheData.schedule;
     if (schedules) {
         // 予定情報を含むHTMLを生成
-        // console.log(`cacheData ${cacheData.isLatestData}`);
+        // console.log(`cacheData ${cacheData.schedule}`);
         const scheduleBoxes = cacheData.schedule.map(schedule => {
             const formattedDate = schedule.date.replace(/\//g, "-");
 
