@@ -74,10 +74,19 @@
 }
 
 .schedule-box {
-    /* セル内のコンテンツの高さを100%に制限 */
-    height: 100%;
+    /* セル内のコンテンツの高さをに制限 */
+    height: 27%;
+    /* 横幅は100%に制限 */
+    width: 100%;
     /* コンテンツが縦に長くなった場合には、スクロールバーを表示 */
     overflow: auto;    
+}
+
+.schedule-info {
+    /* 左揃え */
+    text-align: left;
+    /* 端から3px間を開ける */
+    padding: 0 3px;
 }
 
 th, td {
