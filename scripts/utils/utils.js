@@ -13,6 +13,18 @@ async function generateCalendar(year, month) {
     let lastDayOfLastMonth = lastDateOfLastMonth.getDate();
 
 
+    // 月の週数を求める
+    // 前月の0日、つまり今月の最終日を求める
+    const lastDayOfCurrentMonth = new Date(year, month + 1, 0).getDate();
+    // 今月の1日の曜日を求める
+    const firstDayOfWeek = new Date(year, month, 1).getDay();
+
+    // 週数を計算
+    const weeeksInMonth = Math.ceil((lastDayOfCurrentMonth + firstDayOfWeek) / 7);
+
+    // console.log(`週数: ${weeeksInMonth}`);
+
+
     // カレンダーグリッドを生成するためのHTML文字列を生成
     let calendarHTML = '<table>';
     calendarHTML += '<tr><th>日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th></tr>';

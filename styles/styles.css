@@ -57,12 +57,12 @@
     margin-bottom: 10px;
 }
 
-.youtube {
-    background-color: red;
+.Youtube {
+    background-color: rgba(255, 0, 0, 0.5);
 }
 
-.twitch {
-    background-color: purple;
+.Twitch {
+    background-color: rgba(143, 67, 255, 0.5);
 }
 
 .openrec {
@@ -74,12 +74,29 @@
 }
 
 .schedule-box {
+    color: rgb(0, 0, 0);
+    margin-bottom: 2%;
+    margin-right: 2%;
+    border-radius: 5px;
+    /* はみ出たら折り返す */
+    word-break: nowrap;
     /* セル内のコンテンツの高さをに制限 */
-    height: 27%;
+    height: 13%;
     /* 横幅は100%に制限 */
-    width: 100%;
+    width: 98%;
+
+
     /* コンテンツが縦に長くなった場合には、スクロールバーを表示 */
-    overflow: auto;    
+    overflow: auto;
+    /* スクロールバーを非表示 (IE, Edge) */
+    -ms-overflow-style: none;
+    /* スクロールバーを非表示 (Firefox) */
+    scrollbar-width: none;
+}
+
+/* スクロールバーを非表示(Chrome, Safari) */
+.schedule-box::-webkit-scrollbar {
+    display: none;
 }
 
 .schedule-info {
