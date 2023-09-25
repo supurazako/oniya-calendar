@@ -49,7 +49,6 @@ function updateCurrentMonthLabel() {
 currentMonthLabel.textContent = `${currentYear} ${currentMonth + 1}月`;
 
 
-// TODO: カレンダーの日付に2つ以上の予定がある場合に予定が埋まってしまう問題を解決する
 // まず、キャッシュを使用したカレンダーの表示を行い、そのあとにfetchDataFromSpreadsheet()を実行して、データに変更があった場合はカレンダーの表示を更新する
 async function displaySchedulesFlow(year, month) {
     month += 1; // 月は0から始まるので、1を足して1月を0から始まる1月にする

@@ -120,6 +120,13 @@ function displaySchedules(jsonData) {
                 </div>
             `;
 
+        // 重複したschedule-boxを削除
+        const scheduleBox = document.querySelector(`[data-date="${formattedDate}"] .schedule-box`);
+        if (scheduleBox) {
+            scheduleBox.remove();
+        }
+        
+
         return { formattedDate, scheduleInfo };
     });
 
