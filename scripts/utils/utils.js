@@ -33,7 +33,7 @@ async function generateCalendar(year, month) {
     calendarHTML += '<tr>';
     for (let i = 0; i < firstDayOfMonth; i++) {
         let dayToShow = lastDayOfLastMonth - firstDayOfMonth + 1 +1;
-        calendarHTML += `<td class="lastMonth">${dayToShow}</td>`
+        calendarHTML += `<td class="lastMonth"}>${dayToShow}</td>`
     }
 
 
@@ -46,7 +46,7 @@ async function generateCalendar(year, month) {
         const formattedMonth = (month + 1).toString().padStart(2, '0'); // 2桁の月
         const formattedDay = firstDateOfMonth.getDate().toString().padStart(2, '0'); // 2桁の日
         const formattedDate = `${year}-${formattedMonth}-${formattedDay}`;
-        calendarHTML += `<td data-date="${formattedDate}">${firstDateOfMonth.getDate()}</td>`;
+        calendarHTML += `<td data-date="${formattedDate}" class="week-${weeeksInMonth}">${firstDateOfMonth.getDate()}</td>`;
 
         if (firstDateOfMonth.getDay() === 6) {
             calendarHTML += '</tr>';

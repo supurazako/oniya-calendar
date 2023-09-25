@@ -14,7 +14,7 @@
     padding: 5px;
     border: solid 1px;
     width: 95%;
-    height: 800px;
+    height: 774px;
     table-layout: fixed;
 }
 
@@ -81,7 +81,7 @@
     /* はみ出たら折り返す */
     word-break: nowrap;
     /* セル内のコンテンツの高さをに制限 */
-    height: 13%;
+    height: auto;
     /* 横幅は100%に制限 */
     width: 98%;
 
@@ -107,8 +107,8 @@
 }
 
 th, td {
+    flex: 1;
     width: 14%;
-    height: auto;
     font-size: 100%;
     overflow: hidden;
     white-space: nowrap;
@@ -116,8 +116,16 @@ th, td {
     border: 1px solid #7070707e;
 }
 
+.week-5 {
+    height: 150px;
+}
+
+.week-6 {
+    height: 125px;
+}
+
 th {
-    height: 10px;
+    height: 24px;
 }
 
 
