@@ -111,15 +111,14 @@ function displaySchedules(jsonData) {
     // 予定情報を含むHTMLを生成
     const scheduleBoxes = jsonData.map(schedule => {
         const formattedDate = schedule.date.replace(/\//g, "-");
+        const formattedTime = schedule.time.slice(0, -3);
 
         // 予定情報を含むHTMLを作成
         const scheduleInfo = `
-            <div class="schedule-box">
-                <div class="schedule-time">${schedule.time}</div>
-                <div class="schedule-site">${schedule.site}</div>
-                <div class="schedule-title"><a href="${schedule.url}">${schedule.title}</a></div>
-            </div>
-        `;
+                <div class="schedule-box ${schedule.site}">
+                    <div class="schedule-info">${formattedTime} ${schedule.title}</div>
+                </div>
+            `;
 
         return { formattedDate, scheduleInfo };
     });
