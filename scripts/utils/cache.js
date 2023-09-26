@@ -22,4 +22,4 @@ function getLastEdited(year, month) {
 }
 
 
-export { displaySchedulesFromCache, saveData, getLastEdited };
+export { saveData, getLastEdited };

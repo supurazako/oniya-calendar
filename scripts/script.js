@@ -2,7 +2,7 @@ const currentDate = new Date();
 
 
 import { generateCalendar, fetchDataFromSpreadsheet, displaySchedules } from './utils/utils.js';
-import { displaySchedulesFromCache, saveData, getLastEdited } from './utils/cache.js';
+import { saveData, getLastEdited } from './utils/cache.js';
 
 
 const prevMonthButton = document.getElementById('prev-month');

@@ -115,11 +115,11 @@ function displaySchedules(jsonData) {
                 <div class="schedule-box ${schedule.site}">
                     <div class="schedule-info">${formattedTime} ${schedule.title}</div>
                 </div>
-                <div class="schedule-detail">
-                    <div class="schedule-detail-title">${schedule.title}</div>
-                    <div class="schedule-detail-time">${formattedTime}</div>
-                    <div class="schedule-detail-site">${schedule.site}</div>
-                    <div class="schedule-detail-url"><a href="${schedule.url}" target="_blank">${schedule.url}</a></div>
+                <div id="${formattedTime} ${schedule.title}" class="detail-box">
+                    <div class="detail title">${schedule.title}</div>
+                    <div class="detail time">${formattedTime}</div>
+                    <div class="detail site">${schedule.site}</div>
+                    <div class="detail url"><a href="${schedule.url}" target="_blank">${schedule.url}</a></div>
                 </div>
             `;
 
@@ -143,11 +143,15 @@ function displaySchedules(jsonData) {
 
     // schedule-boxのクリックイベントを追加
     const scheduleBoxElements = document.querySelectorAll('.schedule-box');
-    // schedule-detailを取得
-    const scheduleDetailElement = document.getElementById('schedule-detail');
     
     scheduleBoxElements.forEach(scheduleBoxElement => {
         scheduleBoxElement.addEventListener('click', () => {
+            // どのschedule-boxがクリックされたかを判定するために、クリックされたschedule-boxのtitleを取得
+            const title = scheduleBoxElement.querySelector('.schedule-info').textContent;
+            console.log(`title: ${title}`);
+            // クリックされたschedule-boxに対応するschedule-detailを取得
+            const scheduleDetailElement = document.getElementById(title);
+
             // schedule-detailを表示
             scheduleDetailElement.style.display = 'block';
         });
