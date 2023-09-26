@@ -53,7 +53,18 @@ currentMonthLabel.textContent = `${currentYear} ${currentMonth + 1}月`;
 async function displaySchedulesFlow(year, month) {
     month += 1; // 月は0から始まるので、1を足して1月を0から始まる1月にする
     // キャッシュを基にしてカレンダーにスケジュールを表示する
-    displaySchedulesFromCache(year, month);
+    // キャッシュからスケジュールを取得
+    const cacheData = JSON.parse(localStorage.getItem(`${year}-${month}`));
+    if (cacheData == null) {
+        console.log('キャッシュにデータがありません');
+    } else {
+        const schedules = cacheData.schedule;
+        if (schedules) {
+            await displaySchedules(schedules);
+        }
+    }
+
+    // displaySchedulesFromCache(year, month);
     
     // lastEditedを取得
     const lastEdited = getLastEdited(year, month);

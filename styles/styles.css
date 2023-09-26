@@ -57,6 +57,10 @@
     margin-bottom: 10px;
 }
 
+.schedule-detail {
+    display: none;
+}
+
 .schedule-box {
     color: rgb(0, 0, 0);
     margin-bottom: 2%;
@@ -77,6 +81,11 @@
     scrollbar-width: none;
 }
 
+/* スクロールバーを非表示(Chrome, Safari) */
+.schedule-box::-webkit-scrollbar {
+    display: none;
+}
+
 .Youtube {
     background-color: rgba(255, 0, 0, 0.5);
 }
@@ -91,11 +100,6 @@
 
 .other {
     background-color: rgba(196, 196, 196, 0.5);
-}
-
-/* スクロールバーを非表示(Chrome, Safari) */
-.schedule-box::-webkit-scrollbar {
-    display: none;
 }
 
 .schedule-info {

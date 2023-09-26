@@ -105,9 +105,6 @@ async function fetchDataFromSpreadsheet(year, month, lastEdited) {
 
 // 予定を生成して表示
 function displaySchedules(jsonData) {
-    console.log(jsonData);
-    console.log('予定を更新します')
-
     // 予定情報を含むHTMLを生成
     const scheduleBoxes = jsonData.map(schedule => {
         const formattedDate = schedule.date.replace(/\//g, "-");
@@ -117,6 +114,12 @@ function displaySchedules(jsonData) {
         const scheduleInfo = `
                 <div class="schedule-box ${schedule.site}">
                     <div class="schedule-info">${formattedTime} ${schedule.title}</div>
+                </div>
+                <div class="schedule-detail">
+                    <div class="schedule-detail-title">${schedule.title}</div>
+                    <div class="schedule-detail-time">${formattedTime}</div>
+                    <div class="schedule-detail-site">${schedule.site}</div>
+                    <div class="schedule-detail-url"><a href="${schedule.url}" target="_blank">${schedule.url}</a></div>
                 </div>
             `;
 
@@ -136,6 +139,18 @@ function displaySchedules(jsonData) {
         if (dateCell) {
             dateCell.innerHTML += scheduleBox.scheduleInfo;
         }
+    });
+
+    // schedule-boxのクリックイベントを追加
+    const scheduleBoxElements = document.querySelectorAll('.schedule-box');
+    // schedule-detailを取得
+    const scheduleDetailElement = document.getElementById('schedule-detail');
+    
+    scheduleBoxElements.forEach(scheduleBoxElement => {
+        scheduleBoxElement.addEventListener('click', () => {
+            // schedule-detailを表示
+            scheduleDetailElement.style.display = 'block';
+        });
     });
 }
 
