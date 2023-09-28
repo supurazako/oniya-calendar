@@ -109,17 +109,12 @@ function displaySchedules(jsonData) {
     const scheduleBoxes = jsonData.map(schedule => {
         const formattedDate = schedule.date.replace(/\//g, "-");
         const formattedTime = schedule.time.slice(0, -3);
+        const detailDate = `${formattedDate}-${formattedTime}`;
 
         // 予定情報を含むHTMLを作成
         const scheduleInfo = `
-                <div class="schedule-box ${schedule.site}">
+                <div data-title="${schedule.title}" data-detail-date="${detailDate}" data-site="${schedule.site}" data-url="${schedule.url}" class="schedule-box ${schedule.site}">
                     <div class="schedule-info">${formattedTime} ${schedule.title}</div>
-                </div>
-                <div id="${formattedTime} ${schedule.title}" class="detail-box">
-                    <div class="detail title">${schedule.title}</div>
-                    <div class="detail time">${formattedTime}</div>
-                    <div class="detail site">${schedule.site}</div>
-                    <div class="detail url"><a href="${schedule.url}" target="_blank">${schedule.url}</a></div>
                 </div>
             `;
 
