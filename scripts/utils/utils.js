@@ -198,9 +198,9 @@ function displaySchedules(jsonData) {
             const calendarTableRect = calendarTable.getBoundingClientRect();
             const calendarTableBottom = calendarTableRect.bottom;
 
-            // もしdetail-box要素のbottomがcalendar-table要素のbottomを超えたらdetail-box要素の位置を調整
+            // もしdetail-box要素のbottomがcalendar-table要素のbottomを超えたらdetail-box要素のbottomをcalendar-table要素のbottomに合わせる
             if (detailBoxBottom > calendarTableBottom) {
-                detailBox.style.top = `${scheduleBoxTop - 150}px`;
+                detailBox.style.top = `${scheduleBoxTop - (detailBoxBottom - calendarTableBottom)}px`;
             }
         });
     });
