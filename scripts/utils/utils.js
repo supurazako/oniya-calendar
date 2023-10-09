@@ -107,13 +107,18 @@ async function fetchDataFromSpreadsheet(year, month, lastEdited) {
 function displaySchedules(jsonData) {
     // 予定情報を含むHTMLを生成
     const scheduleBoxes = jsonData.map(schedule => {
+        // 日付から曜日を取得
+        const date = new Date(schedule.date);
+        const dayOfWeek = date.getDay();
+        console.log(dayOfWeek);
+
         const formattedDate = schedule.date.replace(/\//g, "-");
         const formattedTime = schedule.time.slice(0, -3);
         const detailDate = `${formattedDate}-${formattedTime}`;
 
         // 予定情報を含むHTMLを作成
         const scheduleInfo = `
-                <div data-title="${schedule.title}" data-detail-date="${detailDate}" data-site="${schedule.site}" data-url="${schedule.url}" class="schedule-box ${schedule.site}">
+                <div data-title="${schedule.title}" data-detail-date="${detailDate}" data-site="${schedule.site}" data-url="${schedule.url}" data-day="${dayOfWeek}" class="schedule-box ${schedule.site}">
                     <div class="schedule-info">${formattedTime} ${schedule.title}</div>
                 </div>
             `;
@@ -141,16 +146,93 @@ function displaySchedules(jsonData) {
     
     scheduleBoxElements.forEach(scheduleBoxElement => {
         scheduleBoxElement.addEventListener('click', () => {
-            // どのschedule-boxがクリックされたかを判定するために、クリックされたschedule-boxのtitleを取得
-            const title = scheduleBoxElement.querySelector('.schedule-info').textContent;
-            console.log(`title: ${title}`);
-            // クリックされたschedule-boxに対応するschedule-detailを取得
-            const scheduleDetailElement = document.getElementById(title);
+            // schedule-boxのdata属性を取得
+            const title = scheduleBoxElement.dataset.title;
+            const detailDate = scheduleBoxElement.dataset.detailDate;
+            const site = scheduleBoxElement.dataset.site;
+            const url = scheduleBoxElement.dataset.url;
+            const dayOfWeek = scheduleBoxElement.dataset.day;
+            
+            const formattedDate = convertTime(detailDate);
 
-            // schedule-detailを表示
-            scheduleDetailElement.style.display = 'block';
+            // detail-box要素を取得
+            const detailBox = document.getElementById('detail-box');
+
+            // detail-box要素の中身を書き換え
+            detailBox.innerHTML = `
+            <h2>${title}</h2>
+            <p>${formattedDate}</p>
+            <p>サイト ${site}</p>
+            <a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>
+            `;
+
+            // detail-box要素のdisplayをblockに変更
+            detailBox.style.display = 'block';
+
+            // detail-box要素の位置を調整
+            // schedule-box要素の位置を取得
+            const scheduleBoxRect = scheduleBoxElement.getBoundingClientRect();
+            const scheduleBoxTop = scheduleBoxRect.top;
+            const scheduleBoxLeft = scheduleBoxRect.left;
+            const scheduleBoxWidth = scheduleBoxRect.width;
+
+            // detail-box要素の位置を設定
+            // もしdata-dayが5以上ならdetail-box要素を左に表示
+            if (dayOfWeek >= 5) {
+                console.log('左に表示');
+                detailBox.style.top = `${scheduleBoxTop}px`;
+                detailBox.style.left = `${scheduleBoxLeft - 520}px`;
+                detailBox.style.display = 'block';
+            } else {
+                detailBox.style.top = `${scheduleBoxTop}px`;
+                detailBox.style.left = `${scheduleBoxLeft + scheduleBoxWidth + 10}px`;
+                detailBox.style.display = 'block';
+            }
+
+            // detail-box要素の位置を取得
+            const detailBoxRect = detailBox.getBoundingClientRect();
+            const detailBoxBottom = detailBoxRect.bottom;
+
+            // calendar-table要素の位置を取得
+            const calendarTable = document.getElementById('calendar-table');
+            const calendarTableRect = calendarTable.getBoundingClientRect();
+            const calendarTableBottom = calendarTableRect.bottom;
+
+            // もしdetail-box要素のbottomがcalendar-table要素のbottomを超えたらdetail-box要素の位置を調整
+            if (detailBoxBottom > calendarTableBottom) {
+                detailBox.style.top = `${scheduleBoxTop - 150}px`;
+            }
         });
     });
+}
+
+// ユーザーに表示するための時間に変換
+function convertTime(time) {
+    // 変換前の形式: YYYY-MM-DD-HH:MM
+    // 変換後の形式: MM月DD日 HH時MM分
+    // ハイフンで分割
+    const timeArray = time.split('-');
+    
+    // :でmmを分割
+    const mmArray = timeArray[3].split(':');
+
+    // 各要素を変数に代入
+    const month = timeArray[1];
+    const day = timeArray[2];
+    const hour = mmArray[0];
+    const minute = mmArray[1];
+
+    // もしmonth, day, hourが0で始まる場合は0を削除
+    const formattedMonth = month.startsWith('0') ? month.slice(1) : month;
+    const formattedDay = day.startsWith('0') ? day.slice(1) : day;
+    const formattedHour = hour.startsWith('0') ? hour.slice(1) : hour;
+
+    // 変換後の形式に変換
+    const formattedTime = `${formattedMonth}月${formattedDay}日 ${formattedHour}時${minute}分`;
+
+
+    // console.log(formattedTime);
+    return formattedTime;
 }
 
 

@@ -63,8 +63,6 @@ async function displaySchedulesFlow(year, month) {
             await displaySchedules(schedules);
         }
     }
-
-    // displaySchedulesFromCache(year, month);
     
     // lastEditedを取得
     const lastEdited = getLastEdited(year, month);
