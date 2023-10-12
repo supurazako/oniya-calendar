@@ -110,7 +110,6 @@ function displaySchedules(jsonData) {
         // 日付から曜日を取得
         const date = new Date(schedule.date);
         const dayOfWeek = date.getDay();
-        console.log(dayOfWeek);
 
         const formattedDate = schedule.date.replace(/\//g, "-");
         const formattedTime = schedule.time.slice(0, -3);
