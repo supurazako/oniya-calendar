@@ -79,8 +79,8 @@
     margin-bottom: 2%;
     margin-right: 2%;
     border-radius: 5px;
-    /* はみ出たら折り返す */
-    word-break: nowrap;
+    /* はみ出たら省略 */
+    text-overflow: ellipsis;
     /* セル内のコンテンツの高さをに制限 */
     height: auto;
     /* 横幅は100%に制限 */
@@ -149,7 +149,22 @@ th {
 body {
     text-align: center;
     width: auto;
+    margin: 0;
 }
+
+
+/* スマートフォン向けスタイル */
+@media screen and ( max-width:480px ) {
+    /* ページ全体のwidthを100%に設定 */
+    body {
+        width: 100%;
+    }
+
+    #title {
+        font-size: 14px;
+    }
+}
+
 
 html {
     background-color: rgb(255, 255, 255);

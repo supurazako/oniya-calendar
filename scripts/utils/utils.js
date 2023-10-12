@@ -175,27 +175,27 @@ function displaySchedules(jsonData) {
             const scheduleBoxLeft = scheduleBoxRect.left;
             const scheduleBoxWidth = scheduleBoxRect.width;
 
+            // calendar-table要素の位置を取得
+            const calendarTable = document.getElementById('calendar-table');
+            const calendarTableRect = calendarTable.getBoundingClientRect();
+            const calendarTableBottom = calendarTableRect.bottom;
+            const calendarTableRight = calendarTableRect.right;
+
             // detail-box要素の位置を設定
-            // もしdata-dayが5以上ならdetail-box要素を左に表示
-            if (dayOfWeek >= 5) {
-                console.log('左に表示');
+            // もしdetail-box要素がcalendar-table要素の右端を超えたら左に表示
+            if (scheduleBoxLeft + scheduleBoxWidth + 10 + 300 > calendarTableRight) {
                 detailBox.style.top = `${scheduleBoxTop}px`;
-                detailBox.style.left = `${scheduleBoxLeft - 520}px`;
-                detailBox.style.display = 'block';
+                detailBox.style.left = `${scheduleBoxLeft - 530}px`;
+                // console.log('左に表示');
+                
             } else {
                 detailBox.style.top = `${scheduleBoxTop}px`;
                 detailBox.style.left = `${scheduleBoxLeft + scheduleBoxWidth + 10}px`;
-                detailBox.style.display = 'block';
             }
 
             // detail-box要素の位置を取得
             const detailBoxRect = detailBox.getBoundingClientRect();
             const detailBoxBottom = detailBoxRect.bottom;
-
-            // calendar-table要素の位置を取得
-            const calendarTable = document.getElementById('calendar-table');
-            const calendarTableRect = calendarTable.getBoundingClientRect();
-            const calendarTableBottom = calendarTableRect.bottom;
 
             // もしdetail-box要素のbottomがcalendar-table要素のbottomを超えたらdetail-box要素のbottomをcalendar-table要素のbottomに合わせる
             if (detailBoxBottom > calendarTableBottom) {
