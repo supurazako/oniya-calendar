@@ -84,6 +84,15 @@ async function displaySchedulesFlow(year, month) {
     }
 }
 
+// schedule-boxの外側でクリックしたらdetail-box要素を非表示にする
+document.addEventListener('click', (event) => {
+    const target = event.target;
+    if (!target.closest('.schedule-box')) {
+        const detailBox = document.getElementById('detail-box');
+        detailBox.style.display = 'none';
+    }
+});
+
 // ページが読み込まれた後に予定を表示
 window.addEventListener('DOMContentLoaded', async () => {
     await displaySchedulesFlow(currentYear, currentMonth);

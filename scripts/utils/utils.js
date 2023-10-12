@@ -204,14 +204,6 @@ function displaySchedules(jsonData) {
             }
         });
     });
-    // schedule-boxの外側でクリックしたらdetail-box要素を非表示にする
-    document.addEventListener('click', (event) => {
-        const target = event.target;
-        if (!target.closest('.schedule-box')) {
-            const detailBox = document.getElementById('detail-box');
-            detailBox.style.display = 'none';
-        }
-    });
 }
 
 // ユーザーに表示するための時間に変換
